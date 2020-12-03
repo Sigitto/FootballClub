@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ import io.realm.Realm;
 public class AdapterTeams extends RecyclerView.Adapter<AdapterTeams.MyViewHolder> {
 
 
-    private List<ModelTeams> dataList;
+    private ArrayList<ModelTeams> dataList;
     private Callback callback;
     View viewku;
     int posku;
@@ -57,15 +58,15 @@ public class AdapterTeams extends RecyclerView.Adapter<AdapterTeams.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterTeams.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final AdapterTeams.MyViewHolder holder, final int position) {
         holder.txtNama.setText(dataList.get(position).getStrTeam());
         holder.txtDate.setText(dataList.get(position).getIntFormedYear());
         holder.txtNpm.setText(dataList.get(position).getStrDesc());
         Log.d("makananku", "onBindViewHolder: "+dataList.get(position).getStrTeamBadge());
         Glide.with(holder.itemView)
                 .load(dataList.get(position).getStrTeamBadge())
-//                .override(Target.SIZE_ORIGINAL)
-                .apply(new RequestOptions().override(600,400))
+                .override(Target.SIZE_ORIGINAL)
+//                .apply(new RequestOptions().override(600,400))
                 .placeholder(R.mipmap.ic_launcher)
                 .into(holder.ivprofile);
     }
@@ -119,10 +120,6 @@ public class AdapterTeams extends RecyclerView.Adapter<AdapterTeams.MyViewHolder
                 case 2:
                     //Do stuff
 
-
-                    break;
-
-                case 3:
 
                     break;
             }

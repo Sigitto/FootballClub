@@ -73,7 +73,7 @@ public class FavouriteAdapterTeams  extends RecyclerView.Adapter<FavouriteAdapte
 
     @Override
     public int getItemCount() {
-        return 0;
+        return (dataList != null) ? dataList.size() : 0;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{

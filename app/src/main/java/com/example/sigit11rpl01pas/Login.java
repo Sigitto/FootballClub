@@ -32,15 +32,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 String mUser = user.getText().toString();
                 String mPassword = password.getText().toString();
-//                String mUser = email.getText().toString().trim();
-//                String mPass = password.getText().toString().trim();
-//
-//                if (!mUser.isEmpty() || mPass.isEmpty()) {
-//                    Login(mUser, mPass);
-//                } else {
-//                    email.setError("Please insert email");
-//                    password.setError("Please insert password");
-//                }
+
                 if (mUser.equalsIgnoreCase("salah") && mPassword.equalsIgnoreCase("salah")){
                     Toast.makeText(Login.this,"Anda salah", Toast.LENGTH_LONG).show();
                 }else {
