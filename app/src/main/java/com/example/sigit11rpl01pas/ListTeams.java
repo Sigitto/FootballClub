@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,12 +37,14 @@ public class ListTeams extends AppCompatActivity {
 
     }
     void addDataOnline() {
+
         //data online
         AndroidNetworking.get("https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=English%20Premier%20League")
                 .setTag("test")
                 .setPriority(Priority.LOW)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
+
                     @Override
                     public void onResponse(JSONObject response) {
                         // do anything with response
@@ -49,11 +52,13 @@ public class ListTeams extends AppCompatActivity {
                         //jika sudah berhasil debugm lanjutkan code dibawah ini
                         DataArrayList = new ArrayList<>();
                         ModelTeams modelku;
+
                         try {
                             Log.d("hasiljson", "onResponse: " + response.toString());
                             JSONArray jsonArray = response.getJSONArray("teams");
                             Log.d("hasiljson2", "onResponse: " + jsonArray.toString());
                             for (int i = 0; i < jsonArray.length(); i++) {
+                                ProgressDialog pd = new ProgressDialog(ListTeams.this);
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 modelku = new ModelTeams();
                                 modelku.setIdTeams(jsonObject.getInt("idTeam"));
@@ -64,7 +69,10 @@ public class ListTeams extends AppCompatActivity {
                                 modelku.setStrLeague(jsonObject.getString("strLeague"));
                                 DataArrayList.add(modelku);
 
+
+
                             }
+
                             //untuk handle click
                             adapter = new AdapterTeams(DataArrayList, new AdapterTeams.Callback() {
                                 @Override
@@ -101,6 +109,8 @@ public class ListTeams extends AppCompatActivity {
                         Log.d("errorku", "onError errorDetail : " + error.getErrorDetail());
                     }
                 });
+
+
     }
 
 }
