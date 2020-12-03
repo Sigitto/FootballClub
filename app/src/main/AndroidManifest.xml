@@ -15,6 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sigit11rpl01PAS">
+        <activity android:name=".MatchList"></activity>
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,10 +28,8 @@
         <activity android:name=".DetailTeams" />
         <activity android:name=".ListTeams" />
         <activity android:name=".ListTeamsFavourite" />
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".ControlClass">
-
-        </activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ControlClass"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

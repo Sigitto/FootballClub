@@ -22,11 +22,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ListTeams extends AppCompatActivity {
+public class MatchList extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private AdapterTeams adapter;
-    private ArrayList<ModelTeams> DataArrayList; //kit add kan ke main_menu
+    private AdapterMatch adapter;
+    private ArrayList<ModelMatch> DataArrayList; //kit add kan ke main_menu
     private ImageView tambah_data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +37,11 @@ public class ListTeams extends AppCompatActivity {
         addDataOnline();
 
     }
+
     void addDataOnline() {
 
         //data online
-        AndroidNetworking.get("https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=English%20Premier%20League")
+        AndroidNetworking.get("https://www.thesportsdb.com/api/v1/json/1/eventslast.php?id=133613")
                 .setTag("test")
                 .setPriority(Priority.LOW)
                 .build()
@@ -51,38 +53,32 @@ public class ListTeams extends AppCompatActivity {
                         Log.d("hasiljson", "onResponse: " + response.toString());
                         //jika sudah berhasil debugm lanjutkan code dibawah ini
                         DataArrayList = new ArrayList<>();
-                        ModelTeams modelku;
+                        ModelMatch modelku;
 
                         try {
                             Log.d("hasiljson", "onResponse: " + response.toString());
-                            JSONArray jsonArray = response.getJSONArray("teams");
+                            JSONArray jsonArray = response.getJSONArray("results");
                             Log.d("hasiljson2", "onResponse: " + jsonArray.toString());
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                modelku = new ModelTeams();
-                                modelku.setIdTeams(jsonObject.getInt("idTeam"));
-                                modelku.setStrTeam(jsonObject.getString("strTeam"));
-                                modelku.setIntFormedYear(jsonObject.getString("intFormedYear"));
-                                modelku.setStrTeamBadge(jsonObject.getString("strTeamBadge"));
-                                modelku.setStrDesc(jsonObject.getString("strDescriptionEN"));
+                                modelku = new ModelMatch();
+                                modelku.setIdEvent(jsonObject.getInt("idEvent"));
+                                modelku.setStrAwayTeam(jsonObject.getString("strAwayTeam"));
+                                modelku.setStrHomeTeam(jsonObject.getString("strHomeTeam"));
+                                modelku.setStrSeason(jsonObject.getString("strSeason"));
+                                modelku.setStrVenue(jsonObject.getString("strVenue"));
                                 modelku.setStrLeague(jsonObject.getString("strLeague"));
+                                modelku.setStrEvent(jsonObject.getString("strEvent"));
                                 DataArrayList.add(modelku);
 
 
                             }
 
                             //untuk handle click
-                            adapter = new AdapterTeams(DataArrayList, new AdapterTeams.Callback() {
+                            adapter = new AdapterMatch(DataArrayList, new AdapterMatch.Callback() {
                                 @Override
                                 public void onClick(int position) {
-                                    ModelTeams movie =  DataArrayList.get(position);
-                                    Intent intent = new Intent(getApplicationContext(), DetailTeams.class);
-                                    intent.putExtra("judul", movie.strTeam);
-                                    intent.putExtra("date", movie.intFormedYear);
-                                    intent.putExtra("deskripsi", movie.strDesc);
-                                    intent.putExtra("path", movie.strTeamBadge);
-                                    startActivity(intent);
-                                    Toast.makeText(ListTeams.this, "" + position, Toast.LENGTH_LONG);
+
                                 }
 
                                 @Override
@@ -90,7 +86,7 @@ public class ListTeams extends AppCompatActivity {
 
                                 }
                             });
-                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ListTeams.this);
+                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MatchList.this);
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setAdapter(adapter);
                         } catch (JSONException e) {
@@ -108,7 +104,5 @@ public class ListTeams extends AppCompatActivity {
                     }
                 });
 
-
     }
-
 }
